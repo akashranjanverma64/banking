@@ -3,6 +3,7 @@
      include './connection.php';
 
 
+   
 
 
 if(isset($_POST['contact_number'])){
@@ -21,14 +22,30 @@ echo "data insertion denied ";
 
 
 
+
+
 }else{
+
+
     $data = json_decode(file_get_contents('php://input'), true);
     print_r($data);
-    echo $data["contact_number"];
-    echo "oy";
+    echo "#####################";
+    // $contact_number =  $_POST['contact_number'];s
+    $contact_number = $data['contact_number'];
+    echo $contact_number;
+    
+    $query = "INSERT INTO `user` (`id`, `first_name`, `last_name`, `contact_number`, `account_creation_time`) VALUES (NULL, NULL, NULL, {$contact_number}, CURRENT_TIMESTAMP);";
+
+if(mysqli_query($connection,$query)){
+echo " contact number : ".$contact_number. " inserted via json format";
+}else{
+echo "data insertion denied ";
+}
 
 
     echo " Invalid method ";
+
+    
 }
 
 
